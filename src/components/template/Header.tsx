@@ -1,4 +1,3 @@
-import SideMenu from "./SideMenu"
 import Title from "./Title"
 
 interface HeaderProps {
