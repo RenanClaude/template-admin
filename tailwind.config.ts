@@ -7,6 +7,10 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: 'class',
+  safelist: [
+    { pattern: /^h-/ },
+    { pattern: /^w-/ },
+  ],
   theme: {
     extend: {
       colors: {
