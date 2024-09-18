@@ -1,6 +1,7 @@
-import Content from "./Content"
-import Header from "./Header"
-import SideMenu from "./SideMenu"
+import useAppData from "@/data/hook/useAppData";
+import Content from "./Content";
+import Header from "./Header";
+import SideMenu from "./SideMenu";
 
 interface LayoutProps {
   title: string,
@@ -9,8 +10,11 @@ interface LayoutProps {
 }
 
 export default function Layout(props: LayoutProps) {
+  const { theme, switchTheme } = useAppData();
+
+
   return (
-    <div className={`flex h-screen w-screen dark`}>
+    <div className={`${theme} flex h-screen w-screen`}>
       <SideMenu />
       <div className={`flex flex-col bg-gray-300 dark:bg-gray-800 w-full`}>
         <Header title={props.title} subtitle={props.subtitle} />
