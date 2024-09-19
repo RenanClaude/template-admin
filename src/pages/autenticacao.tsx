@@ -1,10 +1,17 @@
 import AuthInput from "@/components/auth/AuthInput";
+import { warningIcon } from "@/components/icons";
 import { useState } from "react";
 
 export default function Authentication() {
   const [value, setValue] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"login" | "register">("login");
+  const [error, setError] = useState(null);
+
+  function showError(msg: string, time = 5) {
+    setError(msg);
+    setTimeout(() => setError(null), time * 1000);
+  }
 
   function toSubmit() {
     if (mode === "login") {
@@ -15,13 +22,25 @@ export default function Authentication() {
   }
 
   return (
-    <div className={`flex flex-col h-screen items-center justify-center`}>
+    <div className={`flex h-screen items-center justify-center`}>
 
-      <div className={`w-1/2`}>
+      <div className={`hidden md:block md:w-1/2 lg:w-2/3`}>
+        <img src="https://picsum.photos/1000" alt="Imagem da página de autenticação"
+          className={`h-screen w-full object-cover`} />
+      </div>
 
-        <h1 className={`text-xl font-bold mb-5`}>
-          {mode === "login" ? "Entre com a sua conta" : "Cadastre-se na plataforma"}
+      <div className={`m-10 w-full md:w-1/2 lg:w-1/3`}>
+
+        <h1 className={`text-3xl font-bold mb-5`}>
+          {mode === "login" ? "Entre com a sua conta" : "Cadastre-se na Plataforma"}
         </h1>
+
+        {error ? (
+          <div className={`flex items-center bg-red-400 text-white px-5 py-3 my-2 border border-red-700 rounded-lg`}>
+            {warningIcon()}
+            <span className="ml-3">{error}</span>
+          </div>
+        ) : false}
 
         <AuthInput label="Email" value={value} type="email" changeValue={setValue} mandatory />
         <AuthInput label="Senha" value={password} type="password" changeValue={setPassword} mandatory />
@@ -35,6 +54,18 @@ export default function Authentication() {
         <button onClick={toSubmit} className={`w-full bg-red-500 hover:bg-red-400 text-white rounded-lg px-4 py-3 `}>
           Entrar com o Google
         </button>
+
+        {mode === "login" ? (
+          <p className="mt-8">
+            Não tem uma conta?
+            <a onClick={() => setMode("register")} className={`text-blue-500 hover:text-blue-700 font-semibold cursor-pointer`}> Cadastre-se</a>
+          </p>
+        ) : (
+          <p className="mt-8">
+            Já faz parte da nossa comunidade?
+            <a onClick={() => setMode("login")} className={`text-blue-500 hover:text-blue-700 font-semibold cursor-pointer`}> Entre aqui</a>
+          </p>
+        )}
 
       </div>
 
