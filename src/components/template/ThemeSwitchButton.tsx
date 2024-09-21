@@ -1,8 +1,8 @@
 import { moonIcon, sunIcon } from "../icons"
 
 interface ThemeSwitchBtnProps {
-  theme: string,
-  switchTheme: () => void
+  theme?: string,
+  switchTheme?: () => void
 }
 
 export default function ThemeSwitchButton(props: ThemeSwitchBtnProps) {
