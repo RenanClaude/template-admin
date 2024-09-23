@@ -1,8 +1,8 @@
 export default interface User {
   uid: string,
-  email: string,
-  name: string,
-  token: string,
-  provider: string,
-  imageUrl: string
+  email: string | null,
+  name: string | null,
+  token: string | ((forceRefresh: boolean) => Promise<string>),
+  provider: string | undefined,
+  imageUrl: string | null
 }
