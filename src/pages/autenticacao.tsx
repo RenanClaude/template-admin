@@ -4,23 +4,30 @@ import useAuth from "@/data/hook/useAuth";
 import { useState } from "react";
 
 export default function Authentication() {
-  const [value, setValue] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"login" | "register">("login");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const { user, loginGoogle } = useAuth();
+  const { registerUser, loginWithEmailAndPassword, loginGoogle } = useAuth();
 
   function showError(msg: string, time = 5) {
     setError(msg);
     setTimeout(() => setError(null), time * 1000);
   }
 
-  function toSubmit() {
-    if (mode === "login") {
-      console.log("login");
-    } else {
-      console.log("cadastro")
+  async function toSubmit() {
+    try {
+      if (mode === "login") {
+        await loginWithEmailAndPassword(email, password);
+      } else {
+        await registerUser(email, password);
+      }
+    } catch (error) {
+      let message
+      if (error instanceof Error) message = error.message
+      else message = String(error)
+      showError(message, 10)
     }
   }
 
@@ -45,7 +52,7 @@ export default function Authentication() {
           </div>
         ) : false}
 
-        <AuthInput label="Email" value={value} type="email" changeValue={setValue} mandatory />
+        <AuthInput label="Email" value={email} type="email" changeValue={setEmail} mandatory />
         <AuthInput label="Senha" value={password} type="password" changeValue={setPassword} mandatory />
 
         <button onClick={toSubmit} className={`w-full bg-indigo-500 hover:bg-indigo-400 text-white rounded-lg px-4 py-3 mt-6`}>
