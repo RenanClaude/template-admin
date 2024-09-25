@@ -7,14 +7,13 @@ import firebase from "../../firebase/config";
 interface AuthContextProps {
   user?: User | null,
   loading?: boolean,
-  registerUser: (email: string, password: string) => Promise<void>,
+  registerUser: ((email: string, password: string) => Promise<void>),
   loginGoogle?: () => Promise<void>,
-  loginWithEmailAndPassword: (email: string, password: string) => Promise<void>,
+  loginWithEmailAndPassword: ((email: string, password: string) => Promise<void>),
   logout?: () => Promise<void>,
-
 }
 
-const AuthContext = createContext<AuthContextProps>({});
+const AuthContext = createContext<AuthContextProps>({ loginWithEmailAndPassword: async () => { }, registerUser: async () => { } });
 
 async function normalizedUser(firebaseUser: firebase.User): Promise<User> {
   const token = firebaseUser.getIdToken;

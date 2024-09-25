@@ -11,7 +11,7 @@ export default function Authentication() {
 
   const { registerUser, loginWithEmailAndPassword, loginGoogle } = useAuth();
 
-  function showError(msg: string, time = 5) {
+  function showError(msg: string, time = 10) {
     setError(msg);
     setTimeout(() => setError(null), time * 1000);
   }
@@ -27,7 +27,7 @@ export default function Authentication() {
       let message
       if (error instanceof Error) message = error.message
       else message = String(error)
-      showError(message, 10)
+      showError(message)
     }
   }
 
