@@ -11,7 +11,9 @@ export default function ForceAuthentication(props: any) {
     return (
       <>
         <Head>
-
+          <script dangerouslySetInnerHTML={{
+            __html: `if(!document.cookie?.includes("admin-template-auth")) {
+            window.location.href = "/autenticacao"}`}} />
         </Head>
         {props.children}
       </>
